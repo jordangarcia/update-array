@@ -9,7 +9,7 @@
   "author": "jordangarcia",
   "license": "ISC",
   "dependencies": {
-    "lodash": "^2.4.1",
+    "underscore": "^2.4.1",
     "id-diff": "0.0.1"
   }
 }
