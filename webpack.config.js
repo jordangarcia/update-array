@@ -1,10 +1,8 @@
 var webpack = require('webpack');
-var version = require('./package.json').version;
 
-var genFilename = function(isMin, version) {
+var genFilename = function(isMin) {
   return [
-    './dist/update-array-',
-    version,
+    './dist/update-array',
     (isMin ? '.min' : ''),
     '.js'
   ].join('');
@@ -18,7 +16,7 @@ module.exports = [
     output: {
       library: 'arrayUpdater',
       libraryTarget: 'umd',
-      filename: genFilename(false, version),
+      filename: genFilename(false),
     },
   },
   {
@@ -26,7 +24,7 @@ module.exports = [
     output: {
       library: 'arrayUpdater',
       libraryTarget: 'umd',
-      filename: genFilename(true, version),
+      filename: genFilename(true),
     },
     plugins: [uglifyJsPlugin],
   }
