@@ -1,5 +1,18 @@
-var _ = require('underscore');
-var diff = require('id-diff');
+var diff = require('./lib/id-diff');
+var extend = require('./lib/extend');
+
+/**
+ * Finds and returns the first instance of an object that has
+ * obj[idKey]===val
+ */
+function findByProp(arr, idKey, val) {
+  for (var i = 0; i < arr.length; i++) {
+    var entry = arr[i]
+    if (entry[idKey] === val) {
+      return entry;
+    }
+  }
+}
 
 module.exports = function execute(arr, newArr) {
   var instructions = diff(arr, newArr)['ids'];
@@ -14,6 +27,7 @@ module.exports = function execute(arr, newArr) {
       var action = step[0];
       if (action === 'x') {
         cache[arr[pointer].id] = arr[pointer];
+        pointer++;
       }
       if (action === '=') {
         pointer++;
@@ -31,15 +45,18 @@ module.exports = function execute(arr, newArr) {
       case 'x':
       case '-':
         // take out spliced item
-        arr.splice(pointer, 1)
+        arr.splice(pointer, 1);
         break;
 
       case '+':
-        cache[id] = {};
+        arr.splice(pointer, 0, findByProp(newArr, 'id', id));
+        pointer++;
+        break
+
       case 'p':
         arr.splice(pointer, 0, cache[id]);
       case '=':
-        _.extend(arr[pointer], _.findWhere(newArr, { id: id }))
+        extend(arr[pointer], findByProp(newArr, 'id', id));
         pointer++;
         break;
 
