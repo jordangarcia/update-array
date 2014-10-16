@@ -23,3 +23,7 @@ updateArray(original, newArray);
 // original[0] now points to the old original[2] with the updated `val` field
 // original[1] now points to the old original[1]
 ```
+
+#### Thanks
+
+Thanks to @mirkokiefer for building the id-diff library

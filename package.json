@@ -1,6 +1,6 @@
 {
-  "name": "array-updater",
-  "version": "1.0.4",
+  "name": "update-array",
+  "version": "1.0.5",
   "description": "Smartly merges objects of two arrays by looking at the 'id'",
   "main": "index.js",
   "scripts": {
