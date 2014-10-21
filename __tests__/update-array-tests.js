@@ -10,6 +10,25 @@ function createObj(id, val) {
 }
 
 describe('array-updater', function() {
+  it('should update in place for a partial match', function() {
+    var obj1 = createObj(1, 'one');
+    var obj2 = createObj(2, 'two');
+    var obj3 = createObj(3, 'three');
+    var obj4 = createObj(4, 'four');
+
+    var new2 = createObj(2, 'new 2')
+    var new3 = createObj(3, 'new 3')
+
+    var orig = [obj1, obj3, obj2, obj4];
+    var newArr = [new2, new3];
+
+    updater(orig, newArr);
+
+    expect(orig.length).toBe(2);
+    expect(orig[0]).toEqual(new2);
+    expect(orig[1]).toEqual(new3);
+  });
+
   it('should update in place objects matching the same id', function() {
     var obj1 = createObj(1, 'one');
     var obj2 = createObj(2, 'two');
