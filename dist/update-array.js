@@ -76,17 +76,13 @@ return /******/ (function(modules) { // webpackBootstrap
 	  var pointer = 0;
 
 	  var cache = (function createCache() {
-	    var pointer = 0;
 	    var cache = {};
 
 	    instructions.forEach(function(step) {
 	      var action = step[0];
+	      var id = step[1]
 	      if (action === 'x') {
-	        cache[arr[pointer].id] = arr[pointer];
-	        pointer++;
-	      }
-	      if (action === '=') {
-	        pointer++;
+	        cache[id] = findByProp(arr, 'id', id)
 	      }
 	    });
 
