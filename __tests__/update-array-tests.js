@@ -152,4 +152,70 @@ describe('array-updater', function() {
 
     expect(orig.length).toBe(0)
   });
+
+  it('should still work if an id is included more than once', function() {
+    var obj1 = createObj(1, 'one');
+    var obj2 = createObj(2, 'two');
+    var obj3 = createObj(3, 'three');
+    var obj3_dupe = createObj(3, 'three');
+
+    var orig = [obj1, obj2, obj3, obj3_dupe];
+    var newArr = [obj3, obj3, obj3, obj3];
+
+    updater(orig, newArr);
+
+    expect(orig[0]).toEqual(obj3);
+    expect(orig[1]).toEqual(obj3);
+    expect(orig[2]).toEqual(obj3);
+    expect(orig[3]).toEqual(obj3);
+    expect(orig.length).toBe(4);
+  });
+
+  it('should still work if an id is included more than once (2)', function() {
+    var obj1 = createObj(1, 'one');
+    var obj2 = createObj(2, 'two');
+    var obj3 = createObj(3, 'three');
+    var obj3_dupe = createObj(3, 'three');
+
+    var obj3_updated = createObj(3, 'three updated');
+
+    var orig = [obj1, obj2, obj3, obj3_dupe];
+    var newArr = [obj3_updated, obj2];
+
+    updater(orig, newArr);
+
+    expect(orig[0]).toBe(obj3);
+    expect(orig[0]).toEqual(obj3_updated);
+    expect(orig[1]).toBe(obj2);
+    expect(orig[1]).toEqual(obj2);
+    expect(orig.length).toBe(2);
+  });
+
+  it('should work if there are duplicate ids in the original array', function() {
+    var obj1 = createObj(1, 'one');
+    var obj2 = createObj(2, 'two');
+    var obj3 = createObj(3, 'three');
+    var obj3_dupe = createObj(3, 'three');
+
+    var orig = [obj1, obj2, obj3, obj3_dupe];
+    var newArr = [];
+
+    updater(orig, newArr);
+
+    expect(orig.length).toBe(0);
+  });
+
+  it('should work if there are duplicate ids in the original array and not in the updated array', function() {
+    var obj3 = createObj(3, 'three');
+    var obj3_dupe = createObj(3, 'three');
+
+    var orig = [obj3, obj3_dupe, obj3];
+    var newArr = [obj3];
+
+    updater(orig, newArr);
+    expect(orig[0]).toBe(obj3);
+    expect(orig[0]).toEqual(obj3);
+
+    expect(orig.length).toBe(1);
+  });
 });
