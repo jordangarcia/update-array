@@ -89,6 +89,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	    return cache;
 	  })();
 
+	  //console.log(instructions)
 	  instructions.forEach(function(step) {
 	    var action = step[0];
 	    var id = step[1];
@@ -106,13 +107,22 @@ return /******/ (function(modules) { // webpackBootstrap
 	        break
 
 	      case 'p':
+	        //console.log('doing p', arr, cache)
 	        arr.splice(pointer, 0, cache[id]);
+	        //console.log('after p', arr)
 	      case '=':
-	        extend(arr[pointer], findByProp(newArr, 'id', id));
+	        // check for out of bounds
+	        if (!arr[pointer]) {
+	          // this is the case where an entity is included more than once in the newArr
+	          arr[pointer] = extend({}, findByProp(newArr, 'id', id));
+	        } else {
+	          extend(arr[pointer], findByProp(newArr, 'id', id));
+	        }
 	        pointer++;
 	        break;
 
 	    }
+	    //console.log(step, arr)
 	  });
 	}
 
